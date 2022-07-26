@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Porównaj kursy walut{% endblock %}
+
+{% block body %}
+    <div class="container d-flex align-items-center justify-content-center">
+        <div class="border border-primary rounded px-2">
+            <h1 class="text-center mt-3">Porównaj kursy walut</h1>
+            <p class="text-center">Wybierz dzień, z którego chciałbyś zobaczyć porównanie z dzisiejszymi kursami</p>
+            {{ form_start(form) }}
+            <div class="row">
+                <div class="d-flex justify-content-center">
+                    {{ form_widget(form.date, {'attr': {'class': 'rounded',} }) }}
+                </div>
+                <div class="d-flex justify-content-center">
+                    {{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary my-2'} }) }}
+                </div>
+            </div>
+            {{ form_end(form) }}
+            <div class="row mt-3">
+                <div class="d-flex justify-content-center">
+                {% if currencyChange %}
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Waluta</th>
+                                <th scope="col">Dzisiejszy kurs</th>
+                                <th scope="col">Kurs z wybranego dnia</th>
+                                <th scope="col">Zmiana procentowa</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for change in currencyChange %}
+                            <tr>
+                                <th scope="row">{{ change.currency }}</th>
+                                <td>{{ change.today }}</td>
+                                <td>{{ change.fromDate }}</td>
+                                <td>{{ change.change }} %</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+
+                {% endif %}
+                </div>
+            </div>
+        </div>  
+    </div>
+{% endblock %}
